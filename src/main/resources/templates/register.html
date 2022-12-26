@@ -64,6 +64,12 @@
                     <label for="confirmPassword">Confirm Password</label>
                     <span class="has-error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
                 </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control" id="dropDownList">
+                        <option value="0">select option</option>
+                        <option th:each="role:${availableRoles}" th:value="${role}" th:text="${role.getName()}"></option>
+                    </select>
+                </div>
             </div>
 
             <!-- Login/Register -->
@@ -78,7 +84,6 @@
                     <a href="/login" class="link-danger">Login</a>
                 </p>
             </div>
-
         </form>
     </div>
 </div>

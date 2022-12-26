@@ -2,21 +2,19 @@ package com.example.springbootthymeleaftw.service;
 
 import com.example.springbootthymeleaftw.model.entity.Product;
 import com.example.springbootthymeleaftw.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
-
-    @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public List<Product> getProducts(){
        return productRepository.findAll();

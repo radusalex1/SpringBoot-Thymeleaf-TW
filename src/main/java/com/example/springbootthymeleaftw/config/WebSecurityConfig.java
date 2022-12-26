@@ -48,7 +48,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .logout()
                 .logoutSuccessUrl("/login")
                 .permitAll()
-                .and().build();
+                .and()
+                .build();
     }
 
     @Override
