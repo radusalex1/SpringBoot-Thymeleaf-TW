@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 @Controller
@@ -38,6 +39,7 @@ public class RegisterController {
         if (bindingResult.hasErrors())
             return "register";
 
+        Role role = roleService.getRoleById(userForm.getRole());
         userService.save(userForm);
         userService.login(userForm.getEmail(), userForm.getPassword());
         return "index";

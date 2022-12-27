@@ -5,6 +5,7 @@ import com.example.springbootthymeleaftw.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 @Service
@@ -15,5 +16,10 @@ public class RoleService {
     public List<RoleEntity> getAllRoles(){
         return roleRepository.findAll();
     }
+
+    public Role getRoleById(Long Id){
+        return roleRepository.getRoleById(Id);
+    }
+
 
 }
