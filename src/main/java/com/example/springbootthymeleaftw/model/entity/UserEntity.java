@@ -30,6 +30,9 @@ public class UserEntity {
     @Transient
     private String passwordConfirm;
 
+    @Transient
+    private Long role;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             /* The table app_users_roles does not need representation in code */

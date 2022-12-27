@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <div th:include="fragments/components::header"></div>
 </head>
 
 <body>
-
 <div class="container mt-5">
     <div class="shadow p-3 mb-5 bg-body rounded">
-        <form method="POST" class="form-signin" th:object="${userForm}" th:action="@{/register}">
+        <form method="POST" class="form-signin" name="createUserForm" th:object="${userForm}" th:action="/register">
 
             <h2 class="form-heading text-center">Create your account</h2>
 
@@ -64,11 +63,19 @@
                     <label for="confirmPassword">Confirm Password</label>
                     <span class="has-error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
                 </div>
+                <div>
+                    please type 1 for B2B,2 for B2C, 3 for Admin , 4 for Client
+                </div>
                 <div class="form-floating mb-3">
-                    <select class="form-control" id="dropDownList">
-                        <option value="0">select option</option>
-                        <option th:each="role:${availableRoles}" th:value="${role}" th:text="${role.getName()}"></option>
-                    </select>
+                    <input id="role"
+                           name="role"
+                           type="text"
+                           class="form-control"
+                           th:field="*{role}"
+                           placeholder="Confirm your role">
+<!--                    <label for="confirmPassword">Confirm Password</label>-->
+<!--                    <span class="has-error" th:if="${#fields.hasErrors('email')}" th:errors="*{username}"></span>-->
+
                 </div>
             </div>
 
@@ -91,4 +98,10 @@
 <div th:include="fragments/components::bootstrap_script"/>
 
 </body>
+<script>
+    let selectedRole = document.getElementById("roles");
+    selectedRole.onchange=(ev)=>{
+        alert(selectedRole.value);
+    }
+</script>
 </html>

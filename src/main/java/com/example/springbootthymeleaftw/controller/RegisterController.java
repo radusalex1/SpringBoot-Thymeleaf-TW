@@ -6,13 +6,11 @@ import com.example.springbootthymeleaftw.service.RoleService;
 import com.example.springbootthymeleaftw.service.UserService;
 import com.example.springbootthymeleaftw.service.UserValidatorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,10 +26,7 @@ public class RegisterController {
     public String open(Model model){
         System.out.println(model);
 
-        List<RoleEntity> availableRoles = roleService.getAllRoles();
-
         model.addAttribute("userForm", new UserEntity());
-        model.addAttribute("availableRoles",availableRoles);
 
         return "register";
     }
