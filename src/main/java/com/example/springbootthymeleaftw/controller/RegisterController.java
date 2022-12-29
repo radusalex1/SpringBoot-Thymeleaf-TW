@@ -6,13 +6,15 @@ import com.example.springbootthymeleaftw.service.RoleService;
 import com.example.springbootthymeleaftw.service.UserService;
 import com.example.springbootthymeleaftw.service.UserValidatorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.management.relation.Role;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,14 +36,21 @@ public class RegisterController {
 
     @PostMapping()
     public String register(@ModelAttribute("userForm") UserEntity userForm, BindingResult bindingResult){
+
         userValidatorService.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors())
             return "register";
 
-        Role role = roleService.getRoleById(userForm.getRole());
+        RoleEntity role = roleService.getRoleById(userForm.getRoleCode());
+        List<RoleEntity> roles = new ArrayList<RoleEntity>();
+        roles.add(role);
+
+        userForm.setRoles(roles);
+
         userService.save(userForm);
         userService.login(userForm.getEmail(), userForm.getPassword());
+
         return "index";
     }
 }

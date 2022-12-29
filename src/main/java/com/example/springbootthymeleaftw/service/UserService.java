@@ -48,7 +48,6 @@ public class UserService implements UserDetailsService {
         throw new UsernameNotFoundException(email);
     }
 
-
     public void save(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -61,5 +60,9 @@ public class UserService implements UserDetailsService {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+    }
+
+    public  Optional<UserEntity> getUserByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 }

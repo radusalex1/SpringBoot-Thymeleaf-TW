@@ -64,14 +64,14 @@
                     <span class="has-error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></span>
                 </div>
                 <div>
-                    please type 1 for B2B,2 for B2C, 3 for Admin , 4 for Client
+                    please type 1 for Admin,2 for B2C, 3 for B2B , 4 for Client
                 </div>
                 <div class="form-floating mb-3">
                     <input id="role"
                            name="role"
                            type="text"
                            class="form-control"
-                           th:field="*{role}"
+                           th:field="*{roleCode}"
                            placeholder="Confirm your role">
 <!--                    <label for="confirmPassword">Confirm Password</label>-->
 <!--                    <span class="has-error" th:if="${#fields.hasErrors('email')}" th:errors="*{username}"></span>-->
@@ -98,10 +98,4 @@
 <div th:include="fragments/components::bootstrap_script"/>
 
 </body>
-<script>
-    let selectedRole = document.getElementById("roles");
-    selectedRole.onchange=(ev)=>{
-        alert(selectedRole.value);
-    }
-</script>
 </html>

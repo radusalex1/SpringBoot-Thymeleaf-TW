@@ -11,5 +11,5 @@ import javax.management.relation.Role;
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
     @Query("Select r from RoleEntity r where r.id=?1")
-    Role getRoleById(Long Id);
+    RoleEntity getRoleById(Long Id);
 }

@@ -31,7 +31,7 @@ public class UserEntity {
     private String passwordConfirm;
 
     @Transient
-    private Long role;
+    private Long roleCode;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
