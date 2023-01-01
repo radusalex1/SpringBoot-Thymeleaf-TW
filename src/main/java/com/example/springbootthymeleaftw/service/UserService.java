@@ -1,5 +1,6 @@
 package com.example.springbootthymeleaftw.service;
 
+import com.example.springbootthymeleaftw.Common.Roles;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.repository.UserRepository;
@@ -48,6 +49,22 @@ public class UserService implements UserDetailsService {
         throw new UsernameNotFoundException(email);
     }
 
+    public List<UserEntity> getB2Cs(){
+        List<UserEntity> b2cs = new ArrayList<UserEntity>();
+        List<UserEntity> users = userRepository.findAll();
+
+        for (UserEntity u:users) {
+            List<RoleEntity> roles = u.getRoles().stream().toList();
+            for (RoleEntity r:roles) {
+                if(r.getName().equals(Roles.B2C.toString())){
+                    b2cs.add(u);
+                    break;
+                }
+            }
+        }
+
+        return b2cs;
+    }
     public void save(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);

@@ -1,5 +1,7 @@
 package com.example.springbootthymeleaftw.controller;
 
+import com.example.springbootthymeleaftw.Common.Roles;
+import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserLoginDto;
 import com.example.springbootthymeleaftw.service.SecurityService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.http.HttpClient;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -48,11 +51,21 @@ public class LoginController {
 
         Optional<UserEntity> optUser = userService.getUserByEmail(user.getEmail());
 
-
-
         if (optUser.isPresent()){
-            redirectAttributes.addFlashAttribute("userLoginForm",optUser);
-            return "redirect:/";
+
+            List<RoleEntity> userRoles  = optUser.get().getRoles().stream().toList();
+
+            for (RoleEntity r:userRoles) {
+                if (r.getName().equals(Roles.Client.toString())){
+
+                    List<UserEntity> b2cs = userService.getB2Cs();
+                    redirectAttributes.addFlashAttribute("b2cs",b2cs);
+                    return "redirect:/";
+                }
+            }
+
+//            redirectAttributes.addFlashAttribute("userLoginForm",optUser);
+//            return "redirect:/";
         }
 
         model.addAttribute("message", "invalid credentials");
