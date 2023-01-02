@@ -25,9 +25,9 @@ public class B2BController {
 
     private final ProductService productService;
     private final UserService userService;
-    private UserEntity loggedB2b;
+    private static UserEntity loggedB2b;
     @GetMapping("/Open")
-    public String open(@ModelAttribute("loggedB2B") UserEntity b2b, Model model, String error, String logout) {
+    public String open(@ModelAttribute("loggedB2B")  UserEntity b2b, Model model, String error, String logout) {
 
         if(loggedB2b==null){
             this.loggedB2b=b2b;
@@ -48,11 +48,12 @@ public class B2BController {
 
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute("productForm") Product product, final RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+        UserEntity loggedB2b_2 = userService.getUserByEmail(this.loggedB2b.getEmail()).get();
         productService.addNewProduct(product);
-        Set<Product> products = this.loggedB2b.getProducts();
+        Set<Product> products = loggedB2b_2.getProducts();
         products.add(product);
-        this.loggedB2b.setProducts(products);
-        userService.save(this.loggedB2b);
+        loggedB2b_2.setProducts(products);
+        userService.save(loggedB2b_2);
         redirectAttributes.addFlashAttribute("loggedB2B",this.loggedB2b);
         return "redirect:/B2BController/Open";
     }
