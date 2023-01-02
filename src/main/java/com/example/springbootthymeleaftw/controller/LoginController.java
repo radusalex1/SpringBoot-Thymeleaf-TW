@@ -7,6 +7,7 @@ import com.example.springbootthymeleaftw.model.entity.UserLoginDto;
 import com.example.springbootthymeleaftw.service.SecurityService;
 import com.example.springbootthymeleaftw.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +68,12 @@ public class LoginController {
                     List<UserEntity> b2bs = userService.getB2Bs();
                     redirectAttributes.addFlashAttribute("loggedB2C",user);
                     return "redirect:/B2C";
+                }
+
+                if(r.getName().equals(Roles.B2B.toString())){
+
+                    redirectAttributes.addFlashAttribute("loggedB2B",optUser.get());
+                    return "redirect:/B2BController/Open";
                 }
             }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/HomeController") // this is default
+@RequestMapping("/HomeController")
 @RequiredArgsConstructor
 public class HomeController {
 //    private final SecurityService securityService;

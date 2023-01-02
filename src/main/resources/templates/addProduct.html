@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="fragments/components::header">
+</head>
+<body>
+<h1> add product page</h1>
+<div class="container mt-5">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+<form method="POST" class="form-signin" name="createUserForm" th:object="${productForm}" th:action="@{/B2BController/addProduct}">
+
+    <h2 class="form-heading text-center">Create your account</h2>
+
+    <div class="form-group">
+        <!-- Username -->
+        <div class="form-floating mb-3">
+            <input id="usernameInput"
+                   name="username"
+                   type="text"
+                   class="form-control"
+                   placeholder="Username"
+                   th:field="*{name}"
+                   autofocus="true">
+            <label for="usernameInput">name</label>
+        </div>
+
+        <!-- Email -->
+        <div class="form-floating mb-3">
+            <input id="priceInput"
+                   name="email"
+                   type="number"
+                   class="form-control"
+                   placeholder="Username"
+                   th:field="*{price}"
+                   autofocus="true">
+            <label for="priceInput">Price</label>
+        </div>
+
+        <!-- Password -->
+        <div class="form-floating mb-3">
+            <input id="categoryInput"
+                   name="category"
+                   type="text"
+                   class="form-control"
+                   th:field="*{category}"
+                   placeholder="Password">
+            <label for="categoryInput">categoryInput</label>
+        </div>
+    </div>
+
+    <!-- Login/Register -->
+    <div class="text-center text-lg-start mt-4 pt-2">
+        <button class="btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                type="submit">
+            AddProduct
+        </button>
+    </div>
+</form>
+    </div>
+</div>
+</body>
+</html>

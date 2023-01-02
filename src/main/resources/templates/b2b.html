@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:include="fragments/components::header">
+</head>
+<body>
+
+<div class="container mt-1">
+  <div class="shadow p-3 mb-5 bg-body rounded">
+   <span th:text="${loggedB2B.getUsername()}"></span>
+  </div>
+</div>
+<form method="get" class="form-signin" name="goToAddProductPage" th:action="@{/B2BController/openAddProductPage}">
+<button type="submit" > Add Product</button>
+</form>
+<div th:include="fragments/components::bootstrap_script"/>
+</body>
+</html>
