@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:include="fragments/components::header">
+</head>
+<body>
+
+<div class="container mt-1">
+  <div class="shadow p-3 mb-5 bg-body rounded">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>b2c name</th>
+          <th>product name</th>
+          <th>category</th>
+          <th>price</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${b2cs.isEmpty()}">
+        <td colspan="2"> no b2c to display</td>
+      </tr>
+      <th:block th:each="b2c:${b2cs}">
+        <tr th:each="product:${b2c.getProducts()}">
+         <td style="display: none" th:value="${b2c.getId()}"></td>
+         <td style="display: none" th:value="${product.getId()}"></td>
+          <td th:text="${b2c.getUsername()}"></td>
+          <td th:text="${product.getName()}"></td>
+          <td th:text="${product.getCategory()}"></td>
+          <td th:text="${product.getPrice()}"></td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div th:include="fragments/components::bootstrap_script"/>
+</body>
+</html>

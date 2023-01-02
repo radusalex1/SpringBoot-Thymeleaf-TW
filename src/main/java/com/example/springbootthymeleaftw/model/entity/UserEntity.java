@@ -2,9 +2,12 @@ package com.example.springbootthymeleaftw.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @Entity
@@ -43,7 +46,19 @@ public class UserEntity {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<RoleEntity> roles;
 
-    @ManyToMany(mappedBy = "users")
-    @JsonIgnore
-    private Collection<Product> products;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            /* The table app_users_roles does not need representation in code */
+            name = "app_users_products",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "product_id", referencedColumnName = "id"))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Product> products;
+
+//    @ManyToMany(mappedBy = "users")
+//    @JsonIgnore
+//    private Collection<Product> products;
 }

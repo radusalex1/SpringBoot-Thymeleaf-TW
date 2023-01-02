@@ -1,7 +1,9 @@
 package com.example.springbootthymeleaftw.config;
 
 import com.example.springbootthymeleaftw.Common.Roles;
+import com.example.springbootthymeleaftw.model.entity.Product;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
+import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.repository.ProductRepository;
 import com.example.springbootthymeleaftw.repository.RoleRepository;
 import com.example.springbootthymeleaftw.repository.UserRepository;
@@ -19,7 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -73,12 +77,58 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 //            RoleEntity client = new RoleEntity(Roles.Client.toString());
 //
 //            roleRepository.saveAll(List.of(admin,b2c,b2b,client));
-
-//            Role admin1 = roleRepository.findRoleByName(Roles.Admin.toString());
 //
-//            User user = new User("radus_alexandru@yahoo.com",admin1);
+//            UserEntity adminUser = new UserEntity();
+//            adminUser.setRoles(List.of(admin));
+//            adminUser.setPassword("Focabob(100)#");
+//            adminUser.setEmail("admin@yahoo.com");
+//            adminUser.setUsername("admin");
 //
-//            userRepository.save(user);
+//            UserEntity clientUser = new UserEntity();
+//            clientUser.setRoles(List.of(client));
+//            clientUser.setPassword("Focabob(100)#");
+//            clientUser.setEmail("client@yahoo.com");
+//            clientUser.setUsername("client");
+//
+//            UserEntity b2c1 = new UserEntity();
+//            b2c1.setRoles(List.of(b2c));
+//            b2c1.setPassword("Focabob(100)#");
+//            b2c1.setEmail("b2c1@yahoo.com");
+//            b2c1.setUsername("b2c1");
+//
+//            UserEntity b2c2 = new UserEntity();
+//            b2c2.setRoles(List.of(b2c));
+//            b2c2.setPassword("Focabob(100)#");
+//            b2c2.setEmail("b2c2@yahoo.com");
+//            b2c2.setUsername("b2c2");
+//
+//            UserEntity b2b1 = new UserEntity();
+//            b2b1.setRoles(List.of(b2b));
+//            b2b1.setPassword("Focabob(100)#");
+//            b2b1.setEmail("b2b1@yahoo.com");
+//            b2b1.setUsername("b2b1");
+//
+//            UserEntity b2b2 = new UserEntity();
+//            b2b2.setRoles(List.of(b2b));
+//            b2b2.setPassword("Focabob(100)#");
+//            b2b2.setEmail("b2b2@yahoo.com");
+//            b2b2.setUsername("b2b2");
+//
+//            userRepository.saveAll(List.of(adminUser,clientUser,b2c1,b2c2,b2b1,b2b2));
+//
+//
+//            Product product=new Product("lapte",2.55,"lactate");
+//            Product product1=new Product("calculator",2000,"tech");
+//            Product product2=new Product("lemn",10,"constructii");
+//            Product product3=new Product("cana",3.55,"de casa");
+//
+//
+//            productRepository.saveAll(List.of(product1,product2,product3,product));
+//
+//            b2c1.setProducts(Set.of(product1,product2,product3));
+//            b2c2.setProducts(Set.of(product,product2,product3));
+//
+//            userRepository.saveAll(List.of(b2c1,b2c2));
 
         };
     }

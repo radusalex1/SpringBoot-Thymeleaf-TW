@@ -60,7 +60,13 @@ public class LoginController {
 
                     List<UserEntity> b2cs = userService.getB2Cs();
                     redirectAttributes.addFlashAttribute("b2cs",b2cs);
-                    return "redirect:/";
+                    return "redirect:/HomeController/GetHomeClient";
+                }
+
+                if(r.getName().equals(Roles.B2C.toString())){
+                    List<UserEntity> b2bs = userService.getB2Bs();
+                    redirectAttributes.addFlashAttribute("loggedB2C",user);
+                    return "redirect:/B2C";
                 }
             }
 

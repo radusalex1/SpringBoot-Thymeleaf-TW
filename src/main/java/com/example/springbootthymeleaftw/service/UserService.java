@@ -65,6 +65,23 @@ public class UserService implements UserDetailsService {
 
         return b2cs;
     }
+
+    public List<UserEntity> getB2Bs(){
+        List<UserEntity> b2bs = new ArrayList<UserEntity>();
+        List<UserEntity> users = userRepository.findAll();
+
+        for (UserEntity u:users) {
+            List<RoleEntity> roles = u.getRoles().stream().toList();
+            for (RoleEntity r:roles) {
+                if(r.getName().equals(Roles.B2B.toString())){
+                    b2bs.add(u);
+                    break;
+                }
+            }
+        }
+
+        return b2bs;
+    }
     public void save(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);

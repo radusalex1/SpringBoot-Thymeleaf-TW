@@ -1,10 +1,14 @@
 package com.example.springbootthymeleaftw.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Data
 @Table(name = "products",schema = "public", catalog = "college")
 public class Product {
     @Id
@@ -24,9 +28,10 @@ public class Product {
     @Column(name = "category")
     private String category;
 
-    public Product(String name, double price) {
+    public Product(String name, double price,String category) {
         this.name = name;
         this.price = price;
+        this.category=category;
     }
 
     public Product() {
@@ -63,13 +68,17 @@ public class Product {
                 '}';
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            /* The table app_users_roles does not need representation in code */
-            name = "app_products_users",
-            joinColumns = @JoinColumn(
-                    name = "app_user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "product_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "products")
+    @JsonIgnore
     private Collection<UserEntity> users;
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            /* The table app_users_roles does not need representation in code */
+//            name = "app_products_users",
+//            joinColumns = @JoinColumn(
+//                    name = "app_user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "product_id", referencedColumnName = "id"))
+//    private Collection<UserEntity> users;
 }
