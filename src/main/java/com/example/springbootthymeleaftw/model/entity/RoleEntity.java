@@ -20,6 +20,15 @@ public class RoleEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Override
+    public String toString() {
+        return "RoleEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                '}';
+    }
+
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private Collection<UserEntity> users;

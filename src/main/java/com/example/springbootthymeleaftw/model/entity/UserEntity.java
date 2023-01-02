@@ -61,4 +61,14 @@ public class UserEntity {
 //    @ManyToMany(mappedBy = "users")
 //    @JsonIgnore
 //    private Collection<Product> products;
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

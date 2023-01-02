@@ -8,6 +8,14 @@ public class UserLoginDto {
     public UserLoginDto() {
     }
 
+    @Override
+    public String toString() {
+        return "UserLoginDto{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
