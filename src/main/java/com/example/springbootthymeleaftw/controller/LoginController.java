@@ -65,9 +65,8 @@ public class LoginController {
                 }
 
                 if(r.getName().equals(Roles.B2C.toString())){
-                    List<UserEntity> b2bs = userService.getB2Bs();
-                    redirectAttributes.addFlashAttribute("loggedB2C",user);
-                    return "redirect:/B2C";
+                    redirectAttributes.addFlashAttribute("loggedB2cs",user);
+                    return "redirect:/B2CController/Open";
                 }
 
                 if(r.getName().equals(Roles.B2B.toString())){
