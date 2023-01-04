@@ -51,7 +51,6 @@ public class LoginController {
         System.out.println(model.getAttribute("password"));
 
         Optional<UserEntity> optUser = userService.getUserByEmail(user.getEmail());
-
         if (optUser.isPresent()){
 
             List<RoleEntity> userRoles  = optUser.get().getRoles().stream().toList();
@@ -65,7 +64,7 @@ public class LoginController {
                 }
 
                 if(r.getName().equals(Roles.B2C.toString())){
-                    redirectAttributes.addFlashAttribute("loggedB2cs",user);
+                    redirectAttributes.addFlashAttribute("loggedB2c",user);// check here if is ok
                     return "redirect:/B2CController/Open";
                 }
 
@@ -73,6 +72,11 @@ public class LoginController {
 
                     redirectAttributes.addFlashAttribute("loggedB2B",optUser.get());
                     return "redirect:/B2BController/Open";
+                }
+
+                if(r.getName().equals(Roles.Admin.toString())){
+                    redirectAttributes.addFlashAttribute("loggedAdmin",optUser.get());
+                    return "redirect:/AdminController/Open";
                 }
             }
 

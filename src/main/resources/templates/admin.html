@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="">
+<head th:include="fragments/components::header">
+</head>
+<body>
+<div class="container mt-1">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <span th:text="${loggedAdmin.getUsername()}"></span>
+    </div>
+</div>
+<div class="container mt-1">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+<!--        method="POST" name="createUserForm" th:object="${productForm}" th:action="@{/B2BController/addProduct}"-->
+        <form class="form-signing" th:action="@{/AdminController/AcceptRequests}" method="post" modelAttribute="acceptRequests">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>email</th>
+                <th>accepted</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${unacceptedRequests.isEmpty()}">
+                <td colspan="2"> no b2bs to display</td>
+            </tr>
+            <tr th:each="r:${unacceptedRequests}">
+                <td style="display: none" th:value="${r.getId()}"></td>
+                <td th:text="${r.getEmail()}"></td>
+                <td th:text="${r.accepted}"></td>
+                <td th:value="${r.getId()}"></td>
+                <td>
+                    <input type="radio" th:name="${r.getId()}" th:value="${r.getId()}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+            <div>
+                <button type="submit" > Accept Requests</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div th:include="fragments/components::bootstrap_script"/>
+</body>
+</html>

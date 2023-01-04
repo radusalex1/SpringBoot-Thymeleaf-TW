@@ -1,7 +1,10 @@
 package com.example.springbootthymeleaftw.controller;
 
+import com.example.springbootthymeleaftw.Common.Roles;
+import com.example.springbootthymeleaftw.model.entity.Request;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
+import com.example.springbootthymeleaftw.service.RequestService;
 import com.example.springbootthymeleaftw.service.RoleService;
 import com.example.springbootthymeleaftw.service.UserService;
 import com.example.springbootthymeleaftw.service.UserValidatorService;
@@ -25,6 +28,7 @@ public class RegisterController {
     private final UserService userService;
     private final RoleService roleService;
 
+    private final RequestService requestService;
     @GetMapping()
     public String open(Model model){
         System.out.println(model);
@@ -51,6 +55,17 @@ public class RegisterController {
         userService.save(userForm);
         userService.login(userForm.getEmail(), userForm.getPassword());
 
-        return "index";
+        for (RoleEntity r:roles) {
+            if (r.getName().equals(Roles.B2B.toString()) ||
+                    r.getName().equals(Roles.B2C.toString())){
+
+                Request request = new Request();
+                request.setEmail(userForm.getEmail());
+                requestService.addNewAccountRequest(request);
+
+            }
+        }
+
+        return "redirect:/login";
     }
 }

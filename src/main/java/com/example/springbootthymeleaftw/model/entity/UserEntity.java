@@ -36,6 +36,14 @@ public class UserEntity {
     @Transient
     private Long roleCode;
 
+    @Transient
+    private String getRole(){
+        for (RoleEntity r:roles) {
+            return r.getName();
+        }
+        return "no role";
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             /* The table app_users_roles does not need representation in code */
