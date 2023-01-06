@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class UserProductEntity implements Serializable {
 
     @EmbeddedId
-    private UserProductEntityPK id;
+    private UserProductEntityPK id = new UserProductEntityPK();
 
     @ManyToOne
     @MapsId("user_id")

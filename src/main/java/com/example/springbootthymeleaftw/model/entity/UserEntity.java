@@ -6,10 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -74,7 +71,7 @@ public class UserEntity {
 
 
     @OneToMany(mappedBy = "product")
-    private Set<UserProductEntity> userProductEntityList = new HashSet<UserProductEntity>();
+    private List<UserProductEntity> userProductEntityList = new ArrayList<UserProductEntity>();
 
     @Override
     public String toString() {

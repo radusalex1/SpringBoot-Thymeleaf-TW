@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -75,7 +72,7 @@ public class Product {
     }
 
     @OneToMany(mappedBy = "user")
-    private Set<UserProductEntity> userProductEntityList = new HashSet<UserProductEntity>();
+    private List<UserProductEntity> userProductEntityList = new ArrayList<UserProductEntity>();
 
 //    @ManyToMany(mappedBy = "products")
 //    @JsonIgnore
