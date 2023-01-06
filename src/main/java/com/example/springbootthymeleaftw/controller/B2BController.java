@@ -2,7 +2,9 @@ package com.example.springbootthymeleaftw.controller;
 
 import com.example.springbootthymeleaftw.model.entity.Product;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
+import com.example.springbootthymeleaftw.model.entity.UserProductEntity;
 import com.example.springbootthymeleaftw.service.ProductService;
+import com.example.springbootthymeleaftw.service.UserProductService;
 import com.example.springbootthymeleaftw.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ public class B2BController {
     private final ProductService productService;
     private final UserService userService;
     private static UserEntity loggedB2b;
+
+    private final UserProductService userProductService;
     @GetMapping("/Open")
     public String open(@ModelAttribute("loggedB2B")  UserEntity b2b, Model model, String error, String logout) {
 
@@ -36,6 +40,7 @@ public class B2BController {
                 this.loggedB2b = b2b;
             }
         }
+
         model.addAttribute("loggedB2B",b2b);
         return  "b2b";
     }
@@ -50,10 +55,18 @@ public class B2BController {
     public String addProduct(@ModelAttribute("productForm") Product product, final RedirectAttributes redirectAttributes, BindingResult bindingResult) {
         UserEntity loggedB2b_2 = userService.getUserByEmail(this.loggedB2b.getEmail()).get();
         productService.addNewProduct(product);
-        Set<Product> products = loggedB2b_2.getProducts();
-        products.add(product);
-        loggedB2b_2.setProducts(products);
-        userService.save(loggedB2b_2);
+
+        UserProductEntity userProductEntity= new UserProductEntity();
+        userProductEntity.setUser(this.loggedB2b);
+        userProductEntity.setProduct(product);
+        userProductEntity.setQuantity(product.getQuantity());
+
+        userProductService.addNewUserProduct(userProductEntity);
+
+//        Set<Product> products = loggedB2b_2.getProducts();
+//        products.add(product);
+//        loggedB2b_2.setProducts(products);
+        //userService.save(loggedB2b_2);
         redirectAttributes.addFlashAttribute("loggedB2B",this.loggedB2b);
         return "redirect:/B2BController/Open";
     }

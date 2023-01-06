@@ -19,18 +19,18 @@ public class HomeController {
 
     @GetMapping("/GetHomeClient")
     public String open(@ModelAttribute("b2cs") List<UserEntity>  b2cs, Model model, String error, String logout) {
-        List<UserEntity> new_b2cs = new ArrayList<UserEntity>();
-        for (UserEntity u: b2cs) {
-            UserEntity user = new UserEntity();
-            user.setId(u.getId());
-            user.setPassword(u.getPassword());
-            user.setProducts(u.getProducts());
-            user.setUsername(u.getUsername());
-            user.setEmail(u.getEmail());
-            new_b2cs.add(user);
-        }
+//        List<UserEntity> new_b2cs = new ArrayList<UserEntity>();
+//        for (UserEntity u: b2cs) {
+//            UserEntity user = new UserEntity();
+//            user.setId(u.getId());
+//            user.setPassword(u.getPassword());
+//            user.setProducts(u.getProducts());
+//            user.setUsername(u.getUsername());
+//            user.setEmail(u.getEmail());
+//            new_b2cs.add(user);
+//        }
 
-        model.addAttribute("b2cs",new_b2cs);
+        //model.addAttribute("b2cs",new_b2cs);
         return "client";
     }
 }

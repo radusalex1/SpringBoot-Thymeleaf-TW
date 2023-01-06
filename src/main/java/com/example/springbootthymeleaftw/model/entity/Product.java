@@ -6,6 +6,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,6 +31,8 @@ public class Product {
     @Column(name = "category")
     private String category;
 
+    @Transient
+    private Integer quantity;
     public Product(String name, double price,String category) {
         this.name = name;
         this.price = price;
@@ -69,9 +74,12 @@ public class Product {
                 '}';
     }
 
-    @ManyToMany(mappedBy = "products")
-    @JsonIgnore
-    private Collection<UserEntity> users;
+    @OneToMany(mappedBy = "user")
+    private Set<UserProductEntity> userProductEntityList = new HashSet<UserProductEntity>();
+
+//    @ManyToMany(mappedBy = "products")
+//    @JsonIgnore
+//    private Collection<UserEntity> users;
 
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(

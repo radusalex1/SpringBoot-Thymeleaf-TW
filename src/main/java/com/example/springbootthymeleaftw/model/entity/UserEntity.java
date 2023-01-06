@@ -7,6 +7,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -55,20 +57,24 @@ public class UserEntity {
     private Collection<RoleEntity> roles;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            /* The table app_users_roles does not need representation in code */
-            name = "app_users_products",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "product_id", referencedColumnName = "id"))
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Product> products;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            /* The table app_users_roles does not need representation in code */
+//            name = "app_users_products",
+//            joinColumns = @JoinColumn(
+//                    name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "product_id", referencedColumnName = "id"))
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private Set<Product> products;
 
 //    @ManyToMany(mappedBy = "users")
 //    @JsonIgnore
 //    private Collection<Product> products;
+
+
+    @OneToMany(mappedBy = "product")
+    private Set<UserProductEntity> userProductEntityList = new HashSet<UserProductEntity>();
 
     @Override
     public String toString() {
