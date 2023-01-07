@@ -73,7 +73,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         return args -> {
             if (userRepository.findAll().size()==0) {
 
-
             RoleEntity admin = new RoleEntity(Roles.Admin.toString());
             RoleEntity b2c = new RoleEntity(Roles.B2C.toString());
             RoleEntity b2b = new RoleEntity(Roles.B2B.toString());

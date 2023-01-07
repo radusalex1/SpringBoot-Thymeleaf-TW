@@ -35,7 +35,7 @@ public class B2BController {
 
         if(loggedB2b==null){
             this.loggedB2b=b2b;
-        }else {
+        } else {
             if (!Objects.equals(b2b.getId(), loggedB2b.getId())) {
                 this.loggedB2b = b2b;
             }

@@ -5,6 +5,8 @@ import com.example.springbootthymeleaftw.repository.UserProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserProductService {
@@ -13,4 +15,9 @@ public class UserProductService {
     public void addNewUserProduct(UserProductEntity newUserProductEntity){
         userProductRepository.save(newUserProductEntity);
     }
+
+    public List<UserProductEntity> getAll(){
+        return userProductRepository.findAll();
+    }
+
 }

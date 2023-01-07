@@ -1,6 +1,10 @@
 package com.example.springbootthymeleaftw.controller;
 
+import com.example.springbootthymeleaftw.Common.Roles;
+import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
+import com.example.springbootthymeleaftw.model.entity.UserProductEntity;
+import com.example.springbootthymeleaftw.service.UserProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +21,22 @@ import java.util.List;
 public class HomeController {
 //    private final SecurityService securityService;
 
+    private final UserProductService  userProductService;
+
     @GetMapping("/GetHomeClient")
     public String open(@ModelAttribute("b2cs") List<UserEntity>  b2cs, Model model, String error, String logout) {
+
+        List<UserProductEntity> listOfB2csWithProducts = userProductService.getAll();
+        List<UserProductEntity> result = new ArrayList<UserProductEntity>();
+        for (UserProductEntity upe:listOfB2csWithProducts) {
+            for (RoleEntity u:upe.getUser().getRoles()) {
+                if(u.getName().equals(Roles.B2C.toString())){
+                    result.add(upe);
+                    break;
+                }
+            }
+        }
+        model.addAttribute("b2csWithProducts",result);
 //        List<UserEntity> new_b2cs = new ArrayList<UserEntity>();
 //        for (UserEntity u: b2cs) {
 //            UserEntity user = new UserEntity();
