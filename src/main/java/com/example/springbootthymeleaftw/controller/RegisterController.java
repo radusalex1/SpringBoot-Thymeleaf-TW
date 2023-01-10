@@ -34,13 +34,15 @@ public class RegisterController {
         System.out.println(model);
 
         model.addAttribute("userForm", new UserEntity());
-
+        model.addAttribute("roleForm", new RoleEntity());
         return "register";
     }
 
     @PostMapping()
-    public String register(@ModelAttribute("userForm") UserEntity userForm, BindingResult bindingResult){
+    public String register(@ModelAttribute("userForm") UserEntity userForm,@ModelAttribute("roleForm") RoleEntity roleEntity, BindingResult bindingResult){
 
+        // todo radu: optiunea de rol vine din html de implementat
+        // todo sa faca si insert in db.
         userValidatorService.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors())

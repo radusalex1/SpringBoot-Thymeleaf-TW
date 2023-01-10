@@ -66,15 +66,26 @@
                 <div>
                     please type 1 for Admin,2 for B2C, 3 for B2B , 4 for Client
                 </div>
-                <div class="form-floating mb-3">
-                    <input id="role"
-                           name="role"
-                           type="text"
-                           class="form-control"
-                           th:field="*{roleCode}"
-                           placeholder="Confirm your role">
-<!--                    <label for="confirmPassword">Confirm Password</label>-->
-<!--                    <span class="has-error" th:if="${#fields.hasErrors('email')}" th:errors="*{username}"></span>-->
+<!--                <div class="form-floating mb-3">-->
+<!--                    <input id="role"-->
+<!--                           name="role"-->
+<!--                           type="text"-->
+<!--                           class="form-control"-->
+<!--                           th:field="*{roleCode}"-->
+<!--                           placeholder="Confirm your role">-->
+<!--&lt;!&ndash;                    <label for="confirmPassword">Confirm Password</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span class="has-error" th:if="${#fields.hasErrors('email')}" th:errors="*{username}"></span>&ndash;&gt;-->
+
+<!--                </div>-->
+                <div class="form-floating mb 3">
+                    <select id="roleType"
+                    name="roleType"
+                    class="form-control"
+                    th:field="${roleForm.name}">
+                    <option value="B2B">B2B</option>
+                    <option value="B2C">b2c</option>
+                    <option value ="Client">client</option>
+                    </select>
 
                 </div>
             </div>
