@@ -64,7 +64,7 @@ public class LoginController {
                 }
 
                 if(r.getName().equals(Roles.B2C.toString())){
-                    redirectAttributes.addFlashAttribute("loggedB2c",user);// check here if is ok
+                    redirectAttributes.addFlashAttribute("loggedB2c",optUser.get());// check here if is ok
                     return "redirect:/B2CController/Open";
                 }
 

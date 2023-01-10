@@ -1,0 +1,2 @@
+jwt in cookie sau url.
+select la register.
