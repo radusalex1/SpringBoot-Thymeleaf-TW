@@ -21,5 +21,9 @@ public class RoleService {
         return roleRepository.getRoleById(Id);
     }
 
+    public RoleEntity getCRoleByName(String name){
+        return  roleRepository.getRoleByName(name);
+    }
+
 
 }

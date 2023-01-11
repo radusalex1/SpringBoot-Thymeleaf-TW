@@ -12,4 +12,7 @@ public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
     @Query("Select r from RoleEntity r where r.id=?1")
     RoleEntity getRoleById(Long Id);
+
+    @Query("Select r from RoleEntity r where r.name=?1")
+    RoleEntity getRoleByName(String name);
 }

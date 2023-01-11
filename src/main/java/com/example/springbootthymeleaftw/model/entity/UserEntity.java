@@ -29,19 +29,21 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @Basic
+    @Column(name = "companyName")
+    private String companyName;
+
+    @Basic
+    @Column(name = "companyCode")
+    private String companyCode;
+
+    @Basic
+    @Column(name = "companyAddress")
+    private String companyAddress;
+
+
     @Transient
     private String passwordConfirm;
-
-    @Transient
-    private Long roleCode;
-
-    @Transient
-    private String getRole(){
-        for (RoleEntity r:roles) {
-            return r.getName();
-        }
-        return "no role";
-    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -52,23 +54,6 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<RoleEntity> roles;
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            /* The table app_users_roles does not need representation in code */
-//            name = "app_users_products",
-//            joinColumns = @JoinColumn(
-//                    name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "product_id", referencedColumnName = "id"))
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    private Set<Product> products;
-
-//    @ManyToMany(mappedBy = "users")
-//    @JsonIgnore
-//    private Collection<Product> products;
-
 
     @OneToMany(mappedBy = "product")
     private List<UserProductEntity> userProductEntityList = new ArrayList<UserProductEntity>();

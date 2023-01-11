@@ -74,17 +74,4 @@ public class Product {
     @OneToMany(mappedBy = "user")
     private List<UserProductEntity> userProductEntityList = new ArrayList<UserProductEntity>();
 
-//    @ManyToMany(mappedBy = "products")
-//    @JsonIgnore
-//    private Collection<UserEntity> users;
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            /* The table app_users_roles does not need representation in code */
-//            name = "app_products_users",
-//            joinColumns = @JoinColumn(
-//                    name = "app_user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "product_id", referencedColumnName = "id"))
-//    private Collection<UserEntity> users;
 }

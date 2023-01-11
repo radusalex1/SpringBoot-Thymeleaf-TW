@@ -21,43 +21,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/registerBusiness")
 @RequiredArgsConstructor
-public class RegisterController {
+public class registerBusinessController {
+
     private final UserValidatorService userValidatorService;
     private final UserService userService;
     private final RoleService roleService;
 
     private final RequestService requestService;
+
     @GetMapping()
-    public String open(Model model){
+    public String open_business_register(Model model){
+
         System.out.println(model);
 
         model.addAttribute("userForm", new UserEntity());
 
-        return "register";
+        model.addAttribute("roleForm", new RoleEntity());
+
+        return "registerBusiness";
     }
 
-
-
     @PostMapping()
-    public String register(@ModelAttribute("userForm") UserEntity userForm, BindingResult bindingResult){
+    public String register(@ModelAttribute("userForm") UserEntity userForm, @ModelAttribute("roleForm") RoleEntity roleEntity, BindingResult bindingResult){
 
         userValidatorService.validate(userForm, bindingResult);
 
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
 
-            //todo creere cont client
+
+
+            //todo creere cont business
             if (bindingResult.hasErrors())
-                return "register";
+                return "registerBusiness";
 
-            RoleEntity role = roleService.getCRoleByName("Client");
-
+            RoleEntity role = roleService.getCRoleByName(roleEntity.getName());
             roles.add(role);
 
             userForm.setRoles(roles);
 
             userService.save(userForm);
+            userService.login(userForm.getEmail(), userForm.getPassword());
+
+            for (RoleEntity r:roles) {
+                if (r.getName().equals(Roles.B2B.toString()) ||
+                        r.getName().equals(Roles.B2C.toString())){
+
+                    Request request = new Request();
+                    request.setEmail(userForm.getEmail());
+                    requestService.addNewAccountRequest(request);
+
+                }
+            }
+
+
 
         return "redirect:/login";
     }
