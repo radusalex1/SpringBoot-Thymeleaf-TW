@@ -44,13 +44,13 @@ public class registerBusinessController {
     }
 
     @PostMapping()
-    public String register(@ModelAttribute("userForm") UserEntity userForm, @ModelAttribute("roleForm") RoleEntity roleEntity, BindingResult bindingResult){
+    public String register(@ModelAttribute("userForm") UserEntity userForm,
+                           @ModelAttribute("roleForm") RoleEntity roleEntity,
+                           BindingResult bindingResult){
 
         userValidatorService.validate(userForm, bindingResult);
 
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
-
-
 
             //todo creere cont business
             if (bindingResult.hasErrors())
@@ -62,7 +62,6 @@ public class registerBusinessController {
             userForm.setRoles(roles);
 
             userService.save(userForm);
-            userService.login(userForm.getEmail(), userForm.getPassword());
 
             for (RoleEntity r:roles) {
                 if (r.getName().equals(Roles.B2B.toString()) ||
