@@ -36,7 +36,7 @@
                 <td th:text="${b2bWithProducts.getProduct().getPrice()}"></td>
                 <td th:text="${b2bWithProducts.getQuantity()}"></td>
                 <td>
-                    <input type="number" th:name="'company-id:'+ ${b2bWithProducts.getUser().getId().toString()} + 'product-id:'+${b2bWithProducts.getProduct().getId().toString()}" >
+                    <input type="number" th:name="${b2bWithProducts.getUser().getId().toString()} +'--'+${b2bWithProducts.getProduct().getId().toString()}" >
                 </td>
                 <td></td>
             </tr>

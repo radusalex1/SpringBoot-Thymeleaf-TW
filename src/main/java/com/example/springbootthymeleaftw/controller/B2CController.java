@@ -1,9 +1,11 @@
 package com.example.springbootthymeleaftw.controller;
 
 import com.example.springbootthymeleaftw.Common.Roles;
+import com.example.springbootthymeleaftw.model.entity.CargoRequest;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserProductEntity;
+import com.example.springbootthymeleaftw.service.CargoRequestService;
 import com.example.springbootthymeleaftw.service.UserProductService;
 import com.example.springbootthymeleaftw.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import java.util.Objects;
 public class B2CController {
 
     private final UserService userService;
+
+    private final CargoRequestService cargoRequestService;
     private UserEntity loggedB2c;
 private final UserProductService userProductService;
     @GetMapping("/Open")
@@ -72,11 +76,30 @@ private final UserProductService userProductService;
         return "b2c_request_marfa";
     }
 
+    private CargoRequest setCargoRequest(String key) {
+        String[] subStrings = key.split("--");
+        CargoRequest cargoRequest = new CargoRequest();
+        cargoRequest.setToUserId(Long.valueOf(subStrings[0]));
+        cargoRequest.setProductId(Long.valueOf(subStrings[1]));
+        return cargoRequest;
+    }
+
     @PostMapping("/RequestMarfaPost")
     public String RequestMarfaPost(@RequestParam Map<String, String> formData,Model model){
 
         System.out.println("here");
-
+        CargoRequest cargoRequest=new CargoRequest();
+        for(Map.Entry<String,String> entry:formData.entrySet()){
+            if(!entry.getKey().toString().startsWith("_csrf") && !entry.getValue().equals("")) {
+                System.out.println(entry.getKey() + "" + entry.getValue());
+                cargoRequest = setCargoRequest(entry.getKey());
+                cargoRequest.setFromUserId(this.loggedB2c.getId());
+                cargoRequest.setQuantity(Integer.valueOf(entry.getValue()));
+                cargoRequestService.add(cargoRequest);
+            }
+        }
         return "redirect:/B2CController/Open";
     }
+
+
 }
