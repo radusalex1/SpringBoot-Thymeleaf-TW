@@ -3,6 +3,7 @@ package com.example.springbootthymeleaftw.controller;
 import com.example.springbootthymeleaftw.model.entity.Product;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserProductEntity;
+import com.example.springbootthymeleaftw.service.CargoRequestService;
 import com.example.springbootthymeleaftw.service.ProductService;
 import com.example.springbootthymeleaftw.service.UserProductService;
 import com.example.springbootthymeleaftw.service.UserService;
@@ -16,9 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/B2BController")
@@ -28,6 +27,7 @@ public class B2BController {
     private final ProductService productService;
     private final UserService userService;
     private static UserEntity loggedB2b;
+    private static CargoRequestService cargoRequestService;
 
     private final UserProductService userProductService;
     @GetMapping("/Open")
@@ -42,13 +42,19 @@ public class B2BController {
         }
 
         model.addAttribute("loggedB2B",b2b);
-        return  "b2b";
+        return "b2b_home";
     }
 
     @GetMapping("/openAddProductPage")
     public String openAddProductPage(Model model){
         model.addAttribute("productForm", new Product());
         return "addProduct";
+    }
+
+    @GetMapping("/ApproveMarfa")
+    public String openApproveMarfaPage(Model model){
+
+        return "b2b_approve_marfa";
     }
 
     @PostMapping("/addProduct")
