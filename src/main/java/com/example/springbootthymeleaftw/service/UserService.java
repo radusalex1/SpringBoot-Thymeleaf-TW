@@ -49,6 +49,10 @@ public class UserService implements UserDetailsService {
         throw new UsernameNotFoundException(email);
     }
 
+    public UserEntity getById(Long id){
+        return  userRepository.getById(id);
+    }
+
     public List<UserEntity> getB2Cs(){
         List<UserEntity> b2cs = new ArrayList<UserEntity>();
         List<UserEntity> users = userRepository.findAll();

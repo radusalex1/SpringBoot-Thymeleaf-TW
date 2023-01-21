@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 //    List<UserEntity> findAllB2C();
 
     List<UserEntity> findAll();
+
+    @Query("Select u from UserEntity u where u.id=?1")
+    UserEntity getById(Long Id);
 }

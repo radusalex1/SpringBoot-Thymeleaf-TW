@@ -40,4 +40,8 @@ public class ProductService {
 
        productRepository.deleteById(productId);
     }
+
+    public Product getById(Long id){
+        return productRepository.getById(id);
+    }
 }

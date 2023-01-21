@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="">
+<head th:include="fragments/components::header">
 </head>
 <body>
-
+<div class="container mt-1">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <span th:text="${loggedB2B.getUsername()}"></span>
+    </div>
+</div>
+<div class="container mt-1">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form class="form-signing" method="post">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>B2c name</th>
+                    <th>Product name</th>
+                    <th>quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${unacceptedCargoRequest.isEmpty()}">
+                    <td colspan="2"> no data to display</td>
+                </tr>
+                <tr th:each="r:${unacceptedCargoRequest}">
+                    <td th:text="${r.getFromUser().getUsername()}"></td>
+                    <td th:text="${r.getProduct().getName()}"></td>
+                    <td th:text="${r.getQuantity()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button type="submit" > Accept Requests</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:include="fragments/components::bootstrap_script"/>
 </body>
 </html>

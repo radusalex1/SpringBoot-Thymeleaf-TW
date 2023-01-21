@@ -25,6 +25,14 @@ public class CargoRequest {
     @Column(name="productId")
     private Long productId;
 
+    @Transient
+    private UserEntity fromUser;
+    @Transient
+    private UserEntity toUser;
+
+    @Transient
+    private  Product product;
+
     @Basic
     @Column(name = "productQuantity")
     private Integer quantity;

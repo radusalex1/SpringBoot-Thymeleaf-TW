@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-
 public interface CargoRequestRepository extends JpaRepository<CargoRequest,Long> {
 
-    @Query("select cr from CargoRequest cr where cr.toUserId=?1")
+    @Query("select cr from CargoRequest cr where cr.toUserId=?1 and cr.accepted=false")
     List<CargoRequest> getAllUnacceptedForB2b(Long Id);
 }

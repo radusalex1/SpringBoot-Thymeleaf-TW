@@ -1,8 +1,10 @@
 package com.example.springbootthymeleaftw.controller;
 
+import com.example.springbootthymeleaftw.model.entity.CargoRequest;
 import com.example.springbootthymeleaftw.model.entity.Product;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserProductEntity;
+import com.example.springbootthymeleaftw.repository.CargoRequestRepository;
 import com.example.springbootthymeleaftw.service.CargoRequestService;
 import com.example.springbootthymeleaftw.service.ProductService;
 import com.example.springbootthymeleaftw.service.UserProductService;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -27,7 +30,7 @@ public class B2BController {
     private final ProductService productService;
     private final UserService userService;
     private static UserEntity loggedB2b;
-    private static CargoRequestService cargoRequestService;
+    private final CargoRequestService cargoRequestService;
 
     private final UserProductService userProductService;
     @GetMapping("/Open")
@@ -54,6 +57,16 @@ public class B2BController {
     @GetMapping("/ApproveMarfa")
     public String openApproveMarfaPage(Model model){
 
+        List<CargoRequest> result = cargoRequestService.getAllUnacceptedForB2b(this.loggedB2b.getId());
+
+        for (CargoRequest cr : result) {
+            cr.setFromUser(userService.getById(cr.getFromUserId()));
+            cr.setToUser(userService.getById(cr.getToUserId()));
+            cr.setProduct(productService.getById(cr.getProductId()));
+        }
+
+        model.addAttribute("unacceptedCargoRequest",result);
+        model.addAttribute("loggedB2B",this.loggedB2b);
         return "b2b_approve_marfa";
     }
 
