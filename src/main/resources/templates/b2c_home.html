@@ -23,20 +23,23 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:if="${b2bs.isEmpty()}">
-        <td colspan="2"> no b2bs to display</td>
+      <tr th:if="${ProductsOfLoggedB2C.isEmpty()}">
+        <td colspan="2"> no products to display</td>
       </tr>
-      <tr th:each="oneB2cWithProducts:${b2bs}">
-        <td style="display: none" th:value="${oneB2cWithProducts.getUser().getId()}"></td>
-        <td th:text="${oneB2cWithProducts.getUser().getUsername()}"></td>
-        <td th:text="${oneB2cWithProducts.getProduct().getName()}"></td>
-        <td th:text="${oneB2cWithProducts.getProduct().getCategory()}"></td>
-        <td th:text="${oneB2cWithProducts.getProduct().getPrice()}"></td>
-        <td th:text="${oneB2cWithProducts.getQuantity()}"></td>
+      <tr th:each="loggedb2c:${ProductsOfLoggedB2C}">
+        <td style="display: none" th:value="${loggedb2c.getUser().getId()}"></td>
+        <td th:text="${loggedb2c.getUser().getUsername()}"></td>
+        <td th:text="${loggedb2c.getProduct().getName()}"></td>
+        <td th:text="${loggedb2c.getProduct().getCategory()}"></td>
+        <td th:text="${loggedb2c.getProduct().getPrice()}"></td>
+        <td th:text="${loggedb2c.getQuantity()}"></td>
         <td></td>
       </tr>
       </tbody>
     </table>
+  </div>
+  <div>
+    <a href="/B2CController/RequestMarfa" class="link-danger">Request marfa:)</a>
   </div>
 </div>
 <div th:include="fragments/components::bootstrap_script"/>

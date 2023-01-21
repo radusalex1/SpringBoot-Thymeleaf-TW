@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:include="fragments/components::header">
+</head>
+<body>
+<div class="container mt-1">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <span th:text="${loggedB2c.getUsername()}"></span>
+    </div>
+</div>
+<form method="POST" class="form-signin" name="requestMarfa" th:action="@{/B2CController/RequestMarfaPost}">
+<div class="container mt-1">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>b2b name</th>
+                <th>product name</th>
+                <th>category</th>
+                <th>price</th>
+                <th>quantity</th>
+                <th>Request Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${b2bsWithProducts.isEmpty()}">
+                <td colspan="2"> no data to display</td>
+            </tr>
+            <tr th:each="b2bWithProducts:${b2bsWithProducts}">
+                <td style="display: none" th:value="${b2bWithProducts.getUser().getId()}"></td>
+                <td th:text="${b2bWithProducts.getUser().getUsername()}"></td>
+                <td th:text="${b2bWithProducts.getProduct().getName()}"></td>
+                <td th:text="${b2bWithProducts.getProduct().getCategory()}"></td>
+                <td th:text="${b2bWithProducts.getProduct().getPrice()}"></td>
+                <td th:text="${b2bWithProducts.getQuantity()}"></td>
+                <td>
+                    <input type="number" th:name="'company-id:'+ ${b2bWithProducts.getUser().getId().toString()} + 'product-id:'+${b2bWithProducts.getProduct().getId().toString()}" >
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <button class="btn btn-primary btn-lg"
+            style="padding-left: 2.5rem; padding-right: 2.5rem;"
+            type="submit">
+        Submit
+    </button>
+</form>
+<div th:include="fragments/components::bootstrap_script"/>
+</body>
+</html>
