@@ -20,4 +20,12 @@ public class UserProductService {
         return userProductRepository.findAll();
     }
 
+    public UserProductEntity getByB2bAndProduct(long b2bId,long productId){
+        return userProductRepository.getByB2bAndProduct(b2bId,productId);
+    }
+
+    public UserProductEntity getByB2cAndProduct(long b2cId,long productId){
+        return userProductRepository.getByB2bAndProduct(b2cId,productId);
+    }
+
 }

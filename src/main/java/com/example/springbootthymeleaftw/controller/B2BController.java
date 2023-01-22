@@ -13,14 +13,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 @Controller
 @RequestMapping("/B2BController")
@@ -55,7 +54,7 @@ public class B2BController {
     }
 
     @GetMapping("/ApproveMarfa")
-    public String openApproveMarfaPage(Model model){
+    public String openApproveMarfaPage(Model model) {
 
         List<CargoRequest> result = cargoRequestService.getAllUnacceptedForB2b(this.loggedB2b.getId());
 
@@ -65,9 +64,58 @@ public class B2BController {
             cr.setProduct(productService.getById(cr.getProductId()));
         }
 
-        model.addAttribute("unacceptedCargoRequest",result);
-        model.addAttribute("loggedB2B",this.loggedB2b);
+        model.addAttribute("unacceptedCargoRequest", result);
+        model.addAttribute("loggedB2B", this.loggedB2b);
         return "b2b_approve_marfa";
+    }
+
+    @PostMapping("/SubmitApproveMarfa")
+    public String ApproveMarfa(@RequestParam("unacceptedCargoRequest")List<String>selectedOptions){
+        int a=1;
+        //get the cargo requests by id
+        List<CargoRequest> acceptedRequests = new ArrayList<CargoRequest>();
+        for (String option: selectedOptions) {
+            acceptedRequests.add(cargoRequestService.getById(Long.valueOf(option)));
+        }
+
+        //set the accepted field to true
+        for (CargoRequest cr: acceptedRequests) {
+            cr.setAccepted(true);
+            cargoRequestService.add(cr);
+            cr.setToUser(userService.getById(cr.getToUserId()));
+            cr.setFromUser(userService.getById(cr.getFromUserId()));
+            cr.setProduct(productService.getById(cr.getProductId()));
+        }
+
+        //update quantities;
+        for(CargoRequest cr:acceptedRequests){
+            //update b2b quantity
+            UserProductEntity userProductEntity_fromB2bPov = userProductService.getByB2bAndProduct(cr.getToUserId(),cr.getProductId());
+            if(userProductEntity_fromB2bPov!=null){
+                int q = userProductEntity_fromB2bPov.getQuantity();
+                userProductEntity_fromB2bPov.setQuantity(q-cr.getQuantity());
+                userProductService.addNewUserProduct(userProductEntity_fromB2bPov);
+            }
+
+            //update b2c quntity
+            UserProductEntity userProductEntity_fromB2cPov = userProductService.getByB2cAndProduct(cr.getFromUserId(),cr.getProductId());
+
+            if(userProductEntity_fromB2cPov!=null){
+                int q = userProductEntity_fromB2cPov.getQuantity();
+                userProductEntity_fromB2cPov.setQuantity(q+cr.getQuantity());
+                userProductService.addNewUserProduct(userProductEntity_fromB2cPov);
+            }
+            else
+            {
+                UserProductEntity userProductEntity_fromB2cPov_new = new UserProductEntity();
+                userProductEntity_fromB2cPov_new.setQuantity(cr.getQuantity());
+                userProductEntity_fromB2cPov_new.setUser(cr.getFromUser());
+                userProductEntity_fromB2cPov_new.setProduct(cr.getProduct());
+                userProductService.addNewUserProduct(userProductEntity_fromB2cPov_new);
+            }
+        }
+
+        return "redirect:/B2BController/ApproveMarfa";
     }
 
     @PostMapping("/addProduct")
@@ -82,10 +130,6 @@ public class B2BController {
 
         userProductService.addNewUserProduct(userProductEntity);
 
-//        Set<Product> products = loggedB2b_2.getProducts();
-//        products.add(product);
-//        loggedB2b_2.setProducts(products);
-        //userService.save(loggedB2b_2);
         redirectAttributes.addFlashAttribute("loggedB2B",this.loggedB2b);
         return "redirect:/B2BController/Open";
     }

@@ -12,7 +12,7 @@
 </div>
 <div class="container mt-1">
     <div class="shadow p-3 mb-5 bg-body rounded">
-        <form class="form-signing" method="post">
+        <form class="form-signing" method="post" th:action="@{/B2BController/SubmitApproveMarfa}">
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -29,6 +29,9 @@
                     <td th:text="${r.getFromUser().getUsername()}"></td>
                     <td th:text="${r.getProduct().getName()}"></td>
                     <td th:text="${r.getQuantity()}"></td>
+                    <td>
+                        <input type="checkbox" th:name="unacceptedCargoRequest" th:id="${r.getId}" th:value="${r.getId}">
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -20,4 +20,8 @@ public class CargoRequestService {
         return cargoRequestRepository.getAllUnacceptedForB2b(id);
     }
 
+    public CargoRequest getById(Long id){
+        return  cargoRequestRepository.getById(id);
+    }
+
 }
