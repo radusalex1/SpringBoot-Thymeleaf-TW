@@ -71,7 +71,6 @@ public class B2BController {
 
     @PostMapping("/SubmitApproveMarfa")
     public String ApproveMarfa(@RequestParam("unacceptedCargoRequest")List<String>selectedOptions){
-        int a=1;
         //get the cargo requests by id
         List<CargoRequest> acceptedRequests = new ArrayList<CargoRequest>();
         for (String option: selectedOptions) {

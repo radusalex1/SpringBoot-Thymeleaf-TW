@@ -14,4 +14,7 @@ public interface RequestRepository extends JpaRepository<Request,Long> {
 
     @Query("update Request set accepted = true where email=?1")
     void updateByEmail(String email);
+
+    @Query("select r.accepted from Request r where r.email=?1")
+    boolean checkiFAccepted(String email);
 }

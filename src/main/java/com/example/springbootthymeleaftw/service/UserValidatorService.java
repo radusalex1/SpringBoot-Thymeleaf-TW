@@ -21,7 +21,8 @@ public class UserValidatorService implements Validator {
     public void validate(Object userEntity, Errors errors) {
         UserEntity user = (UserEntity) userEntity;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "user.isUsernameEmpty");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"username", "user.isUsernameEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "user.isPasswordEmpty");
 
         /* Valid email regex pattern - https://owasp.org/www-community/OWASP_Validation_Regex_Repository */

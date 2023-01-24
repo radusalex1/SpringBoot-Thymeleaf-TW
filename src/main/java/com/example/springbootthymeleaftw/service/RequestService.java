@@ -27,4 +27,11 @@ public class RequestService {
         requestRepository.updateByEmail(email);
     }
 
+    public Request getById(Long valueOf) {
+        return requestRepository.getById(valueOf);
+    }
+
+    public boolean accepted(String userMail){
+        return requestRepository.checkiFAccepted(userMail);
+    }
 }

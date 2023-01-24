@@ -43,18 +43,28 @@ public class registerBusinessController {
         return "registerBusiness";
     }
 
+
     @PostMapping()
     public String register(@ModelAttribute("userForm") UserEntity userForm,
-                           @ModelAttribute("roleForm") RoleEntity roleEntity,
+                           @ModelAttribute("roleForm") RoleEntity roleEntity,Model model,
                            BindingResult bindingResult){
 
-        userValidatorService.validate(userForm, bindingResult);
+        //userValidatorService.validate(userForm, bindingResult);///todo asta nu merge idk why
+
+        //validare lvl999
+        if(userForm.getUsername().isEmpty() || userForm.getPassword().isEmpty()
+        || userForm.getEmail().isEmpty() || userForm.getCompanyAddress().isEmpty()
+        || userForm.getCompanyCode().isEmpty() || userForm.getCompanyName().isEmpty() ||
+        !userForm.getPassword().equals(userForm.getPasswordConfirm())){
+
+             return "redirect:/registerBusiness";
+        }
 
         List<RoleEntity> roles = new ArrayList<RoleEntity>();
 
-            //todo creere cont business
-            if (bindingResult.hasErrors())
-                return "registerBusiness";
+//            //todo creere cont business
+//            if (bindingResult.hasErrors())
+//                return "registerBusiness";
 
             RoleEntity role = roleService.getCRoleByName(roleEntity.getName());
             roles.add(role);

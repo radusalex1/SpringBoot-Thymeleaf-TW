@@ -4,6 +4,7 @@ import com.example.springbootthymeleaftw.Common.Roles;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserLoginDto;
+import com.example.springbootthymeleaftw.service.RequestService;
 import com.example.springbootthymeleaftw.service.SecurityService;
 import com.example.springbootthymeleaftw.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ import java.util.Optional;
 public class LoginController {
 //    private final SecurityService securityService;
     private final UserService userService;
+
+    private final RequestService requestService;
     @GetMapping()
     public String open(Model model, String error, String logout){
 //        if (securityService.isAuthenticated()) {
@@ -56,28 +59,48 @@ public class LoginController {
             List<RoleEntity> userRoles  = optUser.get().getRoles().stream().toList();
 
             for (RoleEntity r:userRoles) {
-                if (r.getName().equals(Roles.Client.toString())){
 
-                    List<UserEntity> b2cs = userService.getB2Cs();
-                    redirectAttributes.addFlashAttribute("b2cs",b2cs);
-                    return "redirect:/HomeController/GetHomeClient";
-                }
 
-                if(r.getName().equals(Roles.B2C.toString())){
-                    redirectAttributes.addFlashAttribute("loggedB2c",optUser.get());// check here if is ok
-                    return "redirect:/B2CController/Open";
-                }
+                    if (r.getName().equals(Roles.Client.toString())) {
 
-                if(r.getName().equals(Roles.B2B.toString())){
+                        List<UserEntity> b2cs = userService.getB2Cs();
+                        redirectAttributes.addFlashAttribute("b2cs", b2cs);
+                        return "redirect:/HomeController/GetHomeClient";
+                    }
 
-                    redirectAttributes.addFlashAttribute("loggedB2B",optUser.get());
-                    return "redirect:/B2BController/Open";
-                }
 
-                if(r.getName().equals(Roles.Admin.toString())){
-                    redirectAttributes.addFlashAttribute("loggedAdmin",optUser.get());
-                    return "redirect:/AdminController/Open";
-                }
+                    if (r.getName().equals(Roles.B2C.toString())) {
+                        if(requestService.accepted(optUser.get().getEmail())) {
+
+                            redirectAttributes.addFlashAttribute("loggedB2c", optUser.get());// check here if is ok
+                            return "redirect:/B2CController/Open";
+                        }
+                        else
+                        {
+                            model.addAttribute("message","account didnt activated");
+                            return "login";
+                        }
+                    }
+
+                    if (r.getName().equals(Roles.B2B.toString())) {
+                        if(requestService.accepted(optUser.get().getEmail())) {
+
+                            redirectAttributes.addFlashAttribute("loggedB2B", optUser.get());
+                            return "redirect:/B2BController/Open";
+
+                        }
+                        else
+                        {
+                            model.addAttribute("message","account didnt activated");
+                            return "login";
+                        }
+                    }
+
+                    if (r.getName().equals(Roles.Admin.toString())) {
+                        redirectAttributes.addFlashAttribute("loggedAdmin", optUser.get());
+                        return "redirect:/AdminController/Open";
+                    }
+
             }
 
 //            redirectAttributes.addFlashAttribute("userLoginForm",optUser);

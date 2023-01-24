@@ -19,7 +19,7 @@ public class UserEntity {
 
     @Basic
     @Column(name = "username")
-    private String username;
+    public String username;
 
     @Basic
     @Column(name = "email", unique = true) /* Duplicates emails not allowed */

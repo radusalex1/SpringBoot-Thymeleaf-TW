@@ -82,12 +82,14 @@ public class AdminController {
 
 
     @PostMapping("/AcceptRequests")
-    public String acceptRequests(Model model,final RedirectAttributes redirectAttributes){
+    public String acceptRequests(@RequestParam("unacceptedRequests") List<String> selectedOptions,Model model,final RedirectAttributes redirectAttributes){
 
-        for (Request r: this.unacceptedRequests1) {
+        for(String option:selectedOptions){
+            Request r =  requestService.getById(Long.valueOf(option));
             r.setAccepted(true);
             requestService.addNewAccountRequest(r);
         }
+
         redirectAttributes.addFlashAttribute("loggedAdmin",this.loggedAdmin);
 
         return "redirect:/AdminController/Open";

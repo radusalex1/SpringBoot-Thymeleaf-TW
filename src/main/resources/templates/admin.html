@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             <tr th:if="${unacceptedRequests.isEmpty()}">
-                <td colspan="2"> no b2bs to display</td>
+                <td colspan="2"> no requests to display</td>
             </tr>
             <tr th:each="r:${unacceptedRequests}">
                 <td style="display: none" th:value="${r.getId()}"></td>
@@ -31,7 +31,7 @@
                 <td th:text="${r.accepted}"></td>
                 <td th:value="${r.getId()}"></td>
                 <td>
-                    <input type="radio" th:name="${r.getId()}" th:value="${r.getId()}">
+                    <input type="checkbox" th:name="unacceptedRequests" th:id="${r.getId()}" th:value="${r.getId()}">
                 </td>
             </tr>
             </tbody>

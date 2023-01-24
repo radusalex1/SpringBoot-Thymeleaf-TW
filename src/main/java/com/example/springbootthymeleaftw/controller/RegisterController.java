@@ -28,7 +28,6 @@ public class RegisterController {
     private final UserService userService;
     private final RoleService roleService;
 
-    private final RequestService requestService;
     @GetMapping()
     public String open(Model model){
         System.out.println(model);
@@ -38,10 +37,9 @@ public class RegisterController {
         return "register";
     }
 
-
-
     @PostMapping()
-    public String register(@ModelAttribute("userForm") UserEntity userForm, BindingResult bindingResult){
+    public String register(@ModelAttribute("userForm") UserEntity userForm,
+                           BindingResult bindingResult){
 
         userValidatorService.validate(userForm, bindingResult);
 
