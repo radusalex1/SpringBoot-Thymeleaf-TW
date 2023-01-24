@@ -59,6 +59,7 @@ public class HomeController {
         }
 
         model.addAttribute("b2csWithProducts",result);
+
         model.addAttribute("categories",allCategories);
         model.addAttribute("b2cs",allB2cs);
 

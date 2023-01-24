@@ -9,12 +9,17 @@ import com.example.springbootthymeleaftw.service.UserService;
 import com.example.springbootthymeleaftw.service.UserValidatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +34,7 @@ public class AdminController {
     private final RequestService requestService;
     private  UserEntity loggedAdmin;
 
+    private final JavaMailSender javaMailSender;
     private final UserService userService;
     private  List<Request> unacceptedRequests1;
     @GetMapping("/Open")
@@ -90,10 +96,34 @@ public class AdminController {
             Request r =  requestService.getById(Long.valueOf(option));
             r.setAccepted(true);
             requestService.addNewAccountRequest(r);
+            try {
+                sendMail(r.getEmail(),"");
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         redirectAttributes.addFlashAttribute("loggedAdmin",this.loggedAdmin);
 
         return "redirect:/AdminController/Open";
+
+    }
+    private void sendMail(String email, String businessName) throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("stare_shop@gmail.com", "Stare Shop");
+        helper.setTo(email);
+        helper.setSubject("Business accepted");
+
+        String content = "<p>Congratulations \uD83D\uDCBC \uD83D\uDCC8 \uD83E\uDD1D \uD83D\uDCCA!</p>"
+                + "<p>Your business " + businessName + " got accepted!</p>"
+                + "<p>Welcome to Stare Shop!</p>";
+
+        helper.setText(content, true);
+
+        javaMailSender.send(message);
     }
 }
