@@ -4,11 +4,11 @@ import com.example.springbootthymeleaftw.Common.Roles;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserLoginDto;
-import com.example.springbootthymeleaftw.service.RequestService;
-import com.example.springbootthymeleaftw.service.SecurityService;
-import com.example.springbootthymeleaftw.service.UserService;
+import com.example.springbootthymeleaftw.service.*;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.net.http.HttpClient;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -36,6 +37,7 @@ public class LoginController {
 //            return "redirect:/";
 //        }
 
+
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
@@ -49,6 +51,7 @@ public class LoginController {
 
     @PostMapping("/postlogin")
     public String postlogin(@ModelAttribute("userLoginForm") UserLoginDto user,final RedirectAttributes redirectAttributes ,Model model, String error, String logout){
+
 
         System.out.println(model.getAttribute("email"));
         System.out.println(model.getAttribute("password"));
@@ -116,5 +119,7 @@ public class LoginController {
     public String error(Model model, String error, String logout){
         return "login";
     }
+
+
 
 }

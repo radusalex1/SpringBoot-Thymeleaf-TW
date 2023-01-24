@@ -49,6 +49,7 @@ public class HomeController {
 //        }
 
         //model.addAttribute("b2cs",new_b2cs);
+
         return "client";
     }
 }
