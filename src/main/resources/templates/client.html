@@ -6,8 +6,29 @@
 </head>
 <body>
 
+<form name="filtering" class="form-signing" th:action="@{/HomeController/GetHomeClient}" method="get">
+    <select name="filter_categories">
+        <option th:value="All" th:text="All"></option>
+        <option th:each="category:${categories}"
+                th:value="${category}"
+                th:text="${category}">
+        </option>
+    </select>
+    <select name="filter_b2b">
+        <option th:value="All" th:text="All"></option>
+        <option th:each="b2c:${b2cs}"
+                th:value="${b2c}"
+                th:text="${b2c}">
+        </option>
+    </select>
+    <input type="number" th:name="quantity" placeholder="quantity at least">
+    <button type="submit" > filter </button>
+</form>
 <div class="container mt-1">
   <div class="shadow p-3 mb-5 bg-body rounded">
+      <div>
+
+      </div>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -31,11 +52,11 @@
           <td th:text="${oneB2cWithProducts.getQuantity()}"></td>
           <td></td>
         </tr>
-
       </tbody>
     </table>
   </div>
 </div>
+
 <div th:include="fragments/components::bootstrap_script"/>
 </body>
 </html>

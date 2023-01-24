@@ -74,7 +74,9 @@ public class AdminController {
         userForm.setUsername(this.loggedAdmin.getUsername());
         userForm.setPasswordConfirm(userForm.getPassword());
         userValidatorService.validate(userForm, bindingResult);
+
         Optional<UserEntity> optUser = userService.getUserByEmail(userForm.getEmail());
+
         if (bindingResult.hasErrors() || !optUser.isPresent()) {
             model.addAttribute("invalidCredentials", "invalidCredentials");
             return "changePass";

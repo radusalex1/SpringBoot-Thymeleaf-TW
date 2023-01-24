@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -26,4 +27,19 @@ public class UserProductEntity implements Serializable {
 
     @Column(name = "productQuantity")
     private Integer quantity;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserProductEntity myEntity = (UserProductEntity) o;
+        return Objects.equals(id, myEntity.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
+
+

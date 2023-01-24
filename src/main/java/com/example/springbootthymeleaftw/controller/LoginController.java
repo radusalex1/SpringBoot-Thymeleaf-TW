@@ -66,8 +66,10 @@ public class LoginController {
 
                     if (r.getName().equals(Roles.Client.toString())) {
 
-                        List<UserEntity> b2cs = userService.getB2Cs();
-                        redirectAttributes.addFlashAttribute("b2cs", b2cs);
+                        redirectAttributes.addAttribute("filter_categories","All");
+                        redirectAttributes.addAttribute("filter_b2b","All");
+                        redirectAttributes.addAttribute("quantity","-1");
+
                         return "redirect:/HomeController/GetHomeClient";
                     }
 
