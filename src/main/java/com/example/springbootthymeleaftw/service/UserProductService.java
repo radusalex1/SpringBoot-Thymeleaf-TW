@@ -62,4 +62,11 @@ public class UserProductService {
         return userProductRepository.findAll();
     }
 
+    public List<UserProductEntity> getAllByB2bId(Long id) {
+        return userProductRepository.findAllByB2b(id);
+    }
+
+    public UserProductEntity getByUserAndProduct(Long userId, Long productId) {
+        return userProductRepository.getByUserAndProduct(userId,productId);
+    }
 }

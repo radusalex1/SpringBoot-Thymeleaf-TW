@@ -11,6 +11,40 @@
    <span th:text="${loggedB2B.getUsername()}"></span>
   </div>
 </div>
+<form method="post" class="form-signin" name="set inventory" th:action="@{/B2BController/SetInventory}">
+    <div class="container mt-1">
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <table class="table table-striped">
+
+
+            <thead>
+            <tr>
+                <th>product name</th>
+                <th>category</th>
+                <th>price</th>
+                <th>original quantity</th>
+                <th>new quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${userProductEntities.isEmpty()}">
+                <td colspan="2"> no data to display</td>
+            </tr>
+            <tr th:each="userProductEntity:${userProductEntities}">
+                <td th:text="${userProductEntity.getProduct().name}"></td>
+                <td th:text="${userProductEntity.getProduct().category}"></td>
+                <td th:text="${userProductEntity.getProduct().price}"></td>
+                <td th:text="${userProductEntity.getQuantity()}"></td>
+                <td>
+                    <input type="number" th:name="${userProductEntity.getUser().getId().toString()} +'--'+${userProductEntity.getProduct().getId().toString()}" >
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+    <button type="submit" > Add New quantity</button>
+</form>
 <form method="get" class="form-signin" name="goToAddProductPage" th:action="@{/B2BController/openAddProductPage}">
 <button type="submit" > Add Product</button>
     <div>

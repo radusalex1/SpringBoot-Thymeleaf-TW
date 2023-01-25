@@ -51,8 +51,15 @@ public class HomeController {
             for (RoleEntity u:upe.getUser().getRoles()) {
                 if(u.getName().equals(Roles.B2C.toString())){
                     result.add(upe);
-                    allCategories.add(upe.getProduct().getCategory());
-                    allB2cs.add(upe.getUser().getCompanyName());
+                    if(!allCategories.contains(upe.getProduct().getCategory()))
+                    {
+                        allCategories.add(upe.getProduct().getCategory());
+                    }
+                   if(!allB2cs.contains(upe.getUser().getCompanyName()))
+                   {
+                       allB2cs.add(upe.getUser().getCompanyName());
+                   }
+
                     break;
                 }
             }

@@ -39,4 +39,10 @@ public interface UserProductRepository extends JpaRepository<UserProductEntity, 
 
     @Query("select upe from UserProductEntity  upe where  upe.user.companyName=?1")
     List<UserProductEntity> getByCompany(String companyName);
+
+    @Query("select upe from UserProductEntity upe where upe.user.id=?1")
+    List<UserProductEntity> findAllByB2b(Long id);
+
+    @Query("select upe from UserProductEntity upe where  upe.user.id=?1 and upe.product.id=?2")
+    UserProductEntity getByUserAndProduct(Long userId,Long productId);
 }
