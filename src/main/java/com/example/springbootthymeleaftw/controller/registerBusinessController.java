@@ -74,8 +74,8 @@ public class registerBusinessController {
             userService.save(userForm);
 
             for (RoleEntity r:roles) {
-                if (r.getName().equals(Roles.B2B.toString()) ||
-                        r.getName().equals(Roles.B2C.toString())){
+                if (r.getName().equals(Roles.BTOB.toString()) ||
+                        r.getName().equals(Roles.BTOC.toString())){
 
                     Request request = new Request();
                     request.setEmail(userForm.getEmail());

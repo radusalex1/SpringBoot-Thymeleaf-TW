@@ -9,6 +9,7 @@ import com.example.springbootthymeleaftw.service.CargoRequestService;
 import com.example.springbootthymeleaftw.service.UserProductService;
 import com.example.springbootthymeleaftw.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/B2CController")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('BTOC')")
 public class B2CController {
 
     private final UserService userService;
@@ -64,7 +66,7 @@ private final UserProductService userProductService;
         List<UserProductEntity> result = new ArrayList<UserProductEntity>();
         for (UserProductEntity upe:listOfB2bsWithProducts) {
             for (RoleEntity r:upe.getUser().getRoles()) {
-                if(r.getName().equals(Roles.B2B.toString())){
+                if(r.getName().equals(Roles.BTOB.toString())){
                     result.add(upe);
                     break;
                 }

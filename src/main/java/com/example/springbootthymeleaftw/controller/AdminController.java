@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/AdminController")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('Admin')")
 public class AdminController {
 
     private final UserValidatorService userValidatorService;
@@ -114,13 +116,13 @@ public class AdminController {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("stare_shop@gmail.com", "Stare Shop");
+        helper.setFrom("emag_lite@gmail.com", "Emag Lite");
         helper.setTo(email);
         helper.setSubject("Business accepted");
 
-        String content = "<p>Congratulations \uD83D\uDCBC \uD83D\uDCC8 \uD83E\uDD1D \uD83D\uDCCA!</p>"
-                + "<p>Your business " + businessName + " got accepted!</p>"
-                + "<p>Welcome to Stare Shop!</p>";
+        String content = "<p>Felicitari!</p>"
+                + "<p>Compania ta tocmai a fost acceptata!</p>"
+                + "<p>Bun venit in echipa Emag Lite!</p>";
 
         helper.setText(content, true);
 

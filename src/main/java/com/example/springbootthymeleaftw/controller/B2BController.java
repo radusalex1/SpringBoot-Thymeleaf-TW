@@ -10,6 +10,9 @@ import com.example.springbootthymeleaftw.service.ProductService;
 import com.example.springbootthymeleaftw.service.UserProductService;
 import com.example.springbootthymeleaftw.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/B2BController")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('BTOB')")
 public class B2BController {
     private final ProductService productService;
     private final UserService userService;
