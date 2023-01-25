@@ -6,6 +6,9 @@ import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.model.entity.UserProductEntity;
 import com.example.springbootthymeleaftw.service.UserProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +25,16 @@ public class HomeController {
 //    private final SecurityService securityService;
 
     private final UserProductService  userProductService;
-
+    @PreAuthorize("hasAuthority('Client')")
     @GetMapping("/GetHomeClient")
     public String open(@ModelAttribute("b2cs") List<UserEntity>  b2cs, Model model, String error, String logout) {
+
 
         List<UserProductEntity> listOfB2csWithProducts = userProductService.getAll();
         List<UserProductEntity> result = new ArrayList<UserProductEntity>();
         for (UserProductEntity upe:listOfB2csWithProducts) {
             for (RoleEntity u:upe.getUser().getRoles()) {
-                if(u.getName().equals(Roles.B2C.toString())){
+                if(u.getName().equals(Roles.BTOC.toString())){
                     result.add(upe);
                     break;
                 }

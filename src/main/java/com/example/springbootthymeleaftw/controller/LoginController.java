@@ -7,8 +7,9 @@ import com.example.springbootthymeleaftw.model.entity.UserLoginDto;
 import com.example.springbootthymeleaftw.service.*;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +29,7 @@ public class LoginController {
     private final UserService userService;
 
     private final RequestService requestService;
+
     @GetMapping()
     public String open(Model model, String error, String logout){
 //        if (securityService.isAuthenticated()) {
@@ -62,7 +61,8 @@ public class LoginController {
             List<RoleEntity> userRoles  = optUser.get().getRoles().stream().toList();
 
             for (RoleEntity r:userRoles) {
-
+                    UserDetails userDetail = userService.loadUserByUsername(user.getEmail());
+                    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetail, null, userDetail.getAuthorities()));
 
                     if (r.getName().equals(Roles.Client.toString())) {
 
@@ -72,7 +72,7 @@ public class LoginController {
                     }
 
 
-                    if (r.getName().equals(Roles.B2C.toString())) {
+                    if (r.getName().equals(Roles.BTOC.toString())) {
                         if(requestService.accepted(optUser.get().getEmail())) {
 
                             redirectAttributes.addFlashAttribute("loggedB2c", optUser.get());// check here if is ok
@@ -85,7 +85,7 @@ public class LoginController {
                         }
                     }
 
-                    if (r.getName().equals(Roles.B2B.toString())) {
+                    if (r.getName().equals(Roles.BTOB.toString())) {
                         if(requestService.accepted(optUser.get().getEmail())) {
 
                             redirectAttributes.addFlashAttribute("loggedB2B", optUser.get());

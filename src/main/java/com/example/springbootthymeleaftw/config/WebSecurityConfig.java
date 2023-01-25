@@ -1,36 +1,30 @@
 package com.example.springbootthymeleaftw.config;
 
 import com.example.springbootthymeleaftw.Common.Roles;
-import com.example.springbootthymeleaftw.model.entity.Product;
 import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.repository.ProductRepository;
 import com.example.springbootthymeleaftw.repository.RoleRepository;
 import com.example.springbootthymeleaftw.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true,jsr250Enabled = true)
 public class WebSecurityConfig implements WebMvcConfigurer {
     private static final String[] METHODS_ALLOWED = {
             HttpMethod.GET.name(),
@@ -77,8 +71,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
             if (userRepository.findAll().size()==0) {
 
             RoleEntity admin = new RoleEntity(Roles.Admin.toString());
-            RoleEntity b2c = new RoleEntity(Roles.B2C.toString());
-            RoleEntity b2b = new RoleEntity(Roles.B2B.toString());
+            RoleEntity b2c = new RoleEntity(Roles.BTOC.toString());
+            RoleEntity b2b = new RoleEntity(Roles.BTOB.toString());
             RoleEntity client = new RoleEntity(Roles.Client.toString());
 
             roleRepository.saveAll(List.of(admin,b2c,b2b,client));

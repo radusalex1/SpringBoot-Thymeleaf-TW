@@ -5,10 +5,7 @@ import com.example.springbootthymeleaftw.model.entity.RoleEntity;
 import com.example.springbootthymeleaftw.model.entity.UserEntity;
 import com.example.springbootthymeleaftw.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -60,7 +57,7 @@ public class UserService implements UserDetailsService {
         for (UserEntity u:users) {
             List<RoleEntity> roles = u.getRoles().stream().toList();
             for (RoleEntity r:roles) {
-                if(r.getName().equals(Roles.B2C.toString())){
+                if(r.getName().equals(Roles.BTOC.toString())){
                     b2cs.add(u);
                     break;
                 }
@@ -77,7 +74,7 @@ public class UserService implements UserDetailsService {
         for (UserEntity u:users) {
             List<RoleEntity> roles = u.getRoles().stream().toList();
             for (RoleEntity r:roles) {
-                if(r.getName().equals(Roles.B2B.toString())){
+                if(r.getName().equals(Roles.BTOB.toString())){
                     b2bs.add(u);
                     break;
                 }
