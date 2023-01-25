@@ -26,7 +26,6 @@ import java.util.Objects;
 @RequestMapping("/B2BController")
 @RequiredArgsConstructor
 public class B2BController {
-
     private final ProductService productService;
     private final UserService userService;
     private static UserEntity loggedB2b;
@@ -67,7 +66,9 @@ public class B2BController {
         }
 
         model.addAttribute("unacceptedCargoRequest", result);
+
         model.addAttribute("loggedB2B", this.loggedB2b);
+
         return "b2b_approve_marfa";
     }
 
@@ -142,7 +143,7 @@ public class B2BController {
         return userProductEntity;
     }
     @PostMapping("/SetInventory")
-    public String SetInventory(@RequestParam Map<String, String> formData,Model model) {
+    public String SetInventory(@RequestParam Map<String, String> formData,final RedirectAttributes redirectAttributes,Model model) {
         System.out.println("here");
         for (Map.Entry<String, String> entry : formData.entrySet()) {
             if (!entry.getKey().toString().startsWith("_csrf") && !entry.getValue().equals("")) {
@@ -150,8 +151,8 @@ public class B2BController {
                 userProductEntity.setQuantity(Integer.valueOf(entry.getValue()));
                 userProductService.addNewUserProduct(userProductEntity);
             }
-
         }
+        redirectAttributes.addFlashAttribute("loggedB2B",this.loggedB2b);
         return "redirect:/B2BController/Open";
     }
 

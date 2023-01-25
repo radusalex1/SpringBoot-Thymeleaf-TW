@@ -43,8 +43,6 @@ public class HomeController {
 
         listOfB2csWithProducts = userProductService.getByFilter(filterCategory,filterB2B,Integer.valueOf(quantity));
 
-
-
         List<UserProductEntity> result = new ArrayList<>();
 
         for (UserProductEntity upe:listOfB2csWithProducts) {
