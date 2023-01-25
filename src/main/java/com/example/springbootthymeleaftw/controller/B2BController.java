@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -29,7 +30,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('BTOB')")
 public class B2BController {
-
     private final ProductService productService;
     private final UserService userService;
     private static UserEntity loggedB2b;
@@ -46,7 +46,8 @@ public class B2BController {
                 this.loggedB2b = b2b;
             }
         }
-
+        List<UserProductEntity> userProductEntities = userProductService.getAllByB2bId(b2b.getId());
+        model.addAttribute("userProductEntities",userProductEntities);
         model.addAttribute("loggedB2B",b2b);
         return "b2b_home";
     }
@@ -69,7 +70,9 @@ public class B2BController {
         }
 
         model.addAttribute("unacceptedCargoRequest", result);
+
         model.addAttribute("loggedB2B", this.loggedB2b);
+
         return "b2b_approve_marfa";
     }
 
@@ -133,6 +136,26 @@ public class B2BController {
 
         userProductService.addNewUserProduct(userProductEntity);
 
+        redirectAttributes.addFlashAttribute("loggedB2B",this.loggedB2b);
+        return "redirect:/B2BController/Open";
+    }
+
+    private UserProductEntity getUserProductEntity(String key)
+    {
+        String[] subStrings = key.split("--");
+        UserProductEntity userProductEntity = userProductService.getByUserAndProduct(Long.valueOf(subStrings[0]),Long.valueOf(subStrings[1]));
+        return userProductEntity;
+    }
+    @PostMapping("/SetInventory")
+    public String SetInventory(@RequestParam Map<String, String> formData,final RedirectAttributes redirectAttributes,Model model) {
+        System.out.println("here");
+        for (Map.Entry<String, String> entry : formData.entrySet()) {
+            if (!entry.getKey().toString().startsWith("_csrf") && !entry.getValue().equals("")) {
+                UserProductEntity userProductEntity = getUserProductEntity(entry.getKey());
+                userProductEntity.setQuantity(Integer.valueOf(entry.getValue()));
+                userProductService.addNewUserProduct(userProductEntity);
+            }
+        }
         redirectAttributes.addFlashAttribute("loggedB2B",this.loggedB2b);
         return "redirect:/B2BController/Open";
     }
