@@ -69,6 +69,7 @@ public class LoginController {
                         redirectAttributes.addAttribute("filter_categories","All");
                         redirectAttributes.addAttribute("filter_b2b","All");
                         redirectAttributes.addAttribute("quantity","-1");
+                        redirectAttributes.addAttribute("search","");
 
                         return "redirect:/HomeController/GetHomeClient";
                     }

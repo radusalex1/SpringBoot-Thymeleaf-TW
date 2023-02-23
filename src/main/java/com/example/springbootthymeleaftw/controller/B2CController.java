@@ -102,6 +102,4 @@ private final UserProductService userProductService;
         }
         return "redirect:/B2CController/Open";
     }
-
-
 }

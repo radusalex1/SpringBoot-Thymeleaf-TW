@@ -31,8 +31,10 @@ public class HomeController {
     public String open(@RequestParam("filter_categories") String filterCategory,
                        @RequestParam("filter_b2b") String filterB2B,
                        @RequestParam("quantity") String quantity,
+                       @RequestParam("search") String search,
                        Model model, String error, String logout) {
 
+        System.out.println(search);
 
         if(quantity.equals(""))
         {
@@ -51,7 +53,19 @@ public class HomeController {
         for (UserProductEntity upe:listOfB2csWithProducts) {
             for (RoleEntity u:upe.getUser().getRoles()) {
                 if(u.getName().equals(Roles.BTOC.toString())){
-                    result.add(upe);
+                    if(!search.equals(""))
+                    {
+                        if(search.equals(upe.getProduct().getName()))
+                        {
+                            result.add(upe);
+                        }
+
+                    }
+                    else
+                    {
+                        result.add(upe);
+                    }
+
                     if(!allCategories.contains(upe.getProduct().getCategory()))
                     {
                         allCategories.add(upe.getProduct().getCategory());
